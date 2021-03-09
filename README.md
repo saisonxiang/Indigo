@@ -1,1 +1,2 @@
 # Indigo
+An improved fetching script for a cryptocurrency website. Further work could be done on this code to fetch additional currencies. The script was saved as an application and initiates with a run/quit dialog box to start the program. It then operates an idle loop continuosly calling an HTTP transfer code. The code would need to be modified by user to call the path and filename an already saved Excel file with 3 sheets.
