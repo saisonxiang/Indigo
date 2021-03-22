@@ -1,9 +1,24 @@
-property eGrepBitcoinPrice : "priceValue___11gHJ\">\\$\\d{2},\\d{3}.\\d{2}"
-property eGrepLitecoinPrice : "priceValue___11gHJ\">\\$\\d{3}.\\d{2}"
-property eGrepDogecoinPrice : "priceValue___11gHJ\">\\$\\d{1}.\\d{5}"
+property eGrepBitcoin1 : "priceValue___11gHJ\">\\$\\d{2},\\d{3}.\\d{2}"
+property eGrepETHA_Lend6 : "priceValue___11gHJ\">\\$\\d{1}.\\d{2}"
+property eGrepBig_Data_Protocol6 : "priceValue___11gHJ\">\\$\\d{1}.\\d{2}"
+property eGrepAlpaca_Finance9 : "priceValue___11gHJ\">\\$\\d{1}.\\d{4}"
+property eGrepDEGEN_Index6 : "priceValue___11gHJ\">\\$\\d{1}.\\d{2}"
+property eGrepBlank_Wallet6 : "priceValue___11gHJ\">\\$\\d{1}.\\d{2}"
+property eGrepMinty_Art6 : "priceValue___11gHJ\">\\$\\d{1}.\\d{2}"
+property eGrep10x_gg10 : "priceValue___11gHJ\">\\$\\d{1}.\\d{5}"
+property eGrepUnido_EP9 : "priceValue___11gHJ\">\\$\\d{1}.\\d{4}"
+property eGrepRYI_Platinum6 : "priceValue___11gHJ\">\\$\\d{1}.\\d{2}"
+
 property currentBitcoinPrice : missing value
-property currentLitecoinPrice : missing value
-property currentDogecoinPrice : missing value
+property currentETHA_LendPrice : missing value
+property currentBig_Data_ProtocolPrice : missing value
+property currentAlpaca_FinancePrice : missing value
+property currentDEGEN_IndexPrice : missing value
+property currentBlank_WalletPrice : missing value
+property currentMinty_ArtPrice : missing value
+property current10x_ggPrice : missing value
+property currentUnido_EPPrice : missing value
+property currentRYI_PlatinumPrice : missing value
 on idle
 	
 	getPrices()
@@ -11,52 +26,68 @@ on idle
 	--cell to input data, and fills the fields with Year, Month, Day, Time, and Price--
 	set {year:y, month:m, day:d} to (current date)
 	tell application "Microsoft Excel"
-		open "/Users/clusterflux/Desktop/人CRYPTO人_excel.xlsx"
+		open "/Users/clusterflux/Desktop/人TURBO人_excel.xlsx"
 		set display alerts to false
-		activate object sheet "ㅇㅅㅇBITCOINㅇㅅㅇ"
-		first row index of (get end (last cell of column 9) direction toward the top)
-		set LastRowBitcoin to first row index of (get end (last cell of column 9) direction toward the top)
+		first row index of (get end (last cell of column 5) direction toward the top)
+		set LastRowBitcoin to first row index of (get end (last cell of column 5) direction toward the top)
 		--write date and time for each market reading to excel file
-		set value of cell ("I" & LastRowBitcoin + 1) to y
-		set value of cell ("J" & LastRowBitcoin + 1) to (date of (current date))
-		set value of cell ("K" & LastRowBitcoin + 1) to d
-		set value of cell ("L" & LastRowBitcoin + 1) to (time string of (current date))
-		set value of cell ("M" & LastRowBitcoin + 1) to currentBitcoinPrice
-		activate object sheet "ㅇㅅㅇLITECOINㅇㅅㅇ"
-		first row index of (get end (last cell of column 9) direction toward the top)
-		set LastRowLitecoin to first row index of (get end (last cell of column 9) direction toward the top)
-		set value of cell ("I" & LastRowLitecoin + 1) to y
-		set value of cell ("J" & LastRowLitecoin + 1) to (date of (current date))
-		set value of cell ("K" & LastRowLitecoin + 1) to d
-		set value of cell ("L" & LastRowLitecoin + 1) to (time string of (current date))
-		set value of cell ("M" & LastRowLitecoin + 1) to currentLitecoinPrice
-		activate object sheet "ㅇㅅㅇDOGECOINㅇㅅㅇ"
-		first row index of (get end (last cell of column 9) direction toward the top)
-		set LastRowDogecoin to first row index of (get end (last cell of column 9) direction toward the top)
-		set value of cell ("I" & LastRowDogecoin + 1) to y
-		set value of cell ("J" & LastRowDogecoin + 1) to (date of (current date))
-		set value of cell ("K" & LastRowDogecoin + 1) to d
-		set value of cell ("L" & LastRowDogecoin + 1) to (time string of (current date))
-		set value of cell ("M" & LastRowDogecoin + 1) to currentDogecoinPrice
-		set workbookName to ("人CRYPTO人_excel.xlsx") as string
+		set value of cell ("A" & LastRowBitcoin + 1) to y
+		set value of cell ("B" & LastRowBitcoin + 1) to ("=TODAY()")
+		set value of cell ("C" & LastRowBitcoin + 1) to d
+		set value of cell ("D" & LastRowBitcoin + 1) to (time string of (current date))
+		set value of cell ("E" & LastRowBitcoin + 1) to currentBitcoinPrice
+		set value of cell ("G" & LastRowBitcoin + 1) to currentETHA_LendPrice
+		set value of cell ("I" & LastRowBitcoin + 1) to currentBig_Data_ProtocolPrice
+		set value of cell ("K" & LastRowBitcoin + 1) to currentAlpaca_FinancePrice
+		set value of cell ("M" & LastRowBitcoin + 1) to currentDEGEN_IndexPrice
+		set value of cell ("O" & LastRowBitcoin + 1) to currentBlank_WalletPrice
+		set value of cell ("Q" & LastRowBitcoin + 1) to currentMinty_ArtPrice
+		set value of cell ("S" & LastRowBitcoin + 1) to current10x_ggPrice
+		set value of cell ("U" & LastRowBitcoin + 1) to currentUnido_EPPrice
+		set value of cell ("W" & LastRowBitcoin + 1) to currentRYI_PlatinumPrice
+		set workbookName to ("人TURBO人_excel.xlsx") as string
 		set destinationPath to (path to desktop as text) & workbookName
 		save active workbook in destinationPath
-		
-		--close every workbook saving no--
-		--tell application "Microsoft Excel"--
-		--quit--
-	end tell
+		end tell
 	
 	return 10 -- In Seconds, How Often To Run Code In This Idle Handler
 end idle
+
+---------- PLACE ALL HANDLERS BENEATH THIS LINE ----------
+
+
 on getPrices()
 	set currentBitcoinPrice to do shell script ¬
-		"curl --no-keepalive 'https://coinmarketcap.com/currencies/bitcoin/markets/' " & ¬
-		"| grep -Eo " & quoted form of eGrepBitcoinPrice & " | cut -c 21-"
-	set currentLitecoinPrice to do shell script ¬
-		"curl --no-keepalive 'https://coinmarketcap.com/currencies/litecoin/' " & ¬
-		"| grep -Eo " & quoted form of eGrepLitecoinPrice & " | cut -c 21-"
-	set currentDogecoinPrice to do shell script ¬
-		"curl --no-keepalive 'https://coinmarketcap.com/currencies/dogecoin/' " & ¬
-		"| grep -Eo " & quoted form of eGrepDogecoinPrice & " | cut -c 21-"
+		"curl --no-keepalive https://coinmarketcap.com/currencies/bitcoin/markets/ " & ¬
+		"| grep -Eo " & quoted form of eGrepBitcoin1 & " | cut -c 21-"
+	set currentbAlphaPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/bAlpha/markets/' " & ¬
+		"| grep -Eo " & quoted form of eGrepbAlpha3 & " | cut -c 21-"
+	set currentETHA_LendPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/etha-lend/' " & ¬
+		"| grep -Eo " & quoted form of eGrepETHA_Lend6 & " | cut -c 21-"
+	set currentBig_Data_ProtocolPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/big-data-protocol/' " & ¬
+		"| grep -Eo " & quoted form of eGrepBig_Data_Protocol6 & " | cut -c 21-"
+	set currentAlpaca_FinancePrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/alpaca-finance/' " & ¬
+		"| grep -Eo " & quoted form of eGrepAlpaca_Finance9 & " | cut -c 21-"
+	set currentDEGEN_IndexPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/degen-index/' " & ¬
+		"| grep -Eo " & quoted form of eGrepDEGEN_Index6 & " | cut -c 21-"
+	set currentBlank_WalletPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/blank-wallet/' " & ¬
+		"| grep -Eo " & quoted form of eGrepBlank_Wallet6 & " | cut -c 21-"
+	set currentMinty_ArtPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/minty-art/' " & ¬
+		"| grep -Eo " & quoted form of eGrepMinty_Art6 & " | cut -c 21-"
+	set current10x_ggPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/10xgg/' " & ¬
+		"| grep -Eo " & quoted form of eGrep10x_gg10 & " | cut -c 21-"
+set currentUnido_EPPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/unido/' " & ¬
+		"| grep -Eo " & quoted form of eGrepUnido_EP9 & " | cut -c 21-"
+set currentRYI_PlatinumPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/ryi-platinum/' " & ¬
+		"| grep -Eo " & quoted form of eGrepRYI_Platinum6 & " | cut -c 21-"
 end getPrices
