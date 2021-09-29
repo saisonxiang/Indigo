@@ -1,0 +1,100 @@
+Edit: The program no longer werks with excel and is free and clear with @wch1zpink or whatevers
+log.txt file. It could be a background instantaneous checker for someone with a macbook.
+After further research of the project's topic it was found that crypto is a top GHG emitter.
+Werk on the project will probably cease but here lies the stolen code of a cyber-ninja
+
+
+@wch1zpink's code
+Thanks for your helps stranger.
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+
+
+
+
+property eGrepBitcoinPrice : "priceValue\\ \">\\$\\d{2},\\d{3}.\\d{2}"
+property eGrepLitecoinPrice : "priceValue\\ \">\\$\\d{3}.\\d{2}"
+property eGrepDogecoinPrice : "priceValue\\ \">\\$\\d{1}.\\d{4}"
+property currentBitcoinPrice : missing value
+property currentLitecoinPrice : missing value
+property currentDogecoinPrice : missing value
+property logToTextFile : missing value
+
+on run --   Executed Only Once.. When This Script Applet Is Launched
+	activate
+	set logToTextFile to (display dialog ¬
+		"Enable Quick Log Mode?" buttons {"No", "Yes"} ¬
+		default button 2 with title "Log Mode")
+	if button returned of logToTextFile = "Yes" then
+		my logCommands's beginLog()
+		getPrices()
+	else
+		getPrices()
+		return {currentBitcoinPrice, currentDogecoinPrice, currentLitecoinPrice}
+	end if
+end run
+
+on idle
+	getPrices()
+	try
+		if button returned of logToTextFile = "Yes" then my logCommands's writeToLog()
+	on error errMsg number errNum
+		my logCommands's writeToLog()
+	end try
+	
+	(* within this idle handler is where you will place
+    The bulk of your additional code. All of your Excel
+    Code Goes Here*)
+	
+	return 5 -- In Seconds, How Often To Run Code In This Idle Handler
+end idle
+
+---------- PLACE ALL ADDITIONAL HANDLERS BENEATH THIS LINE ----------
+
+on getPrices()
+	set currentBitcoinPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/bitcoin/markets/' " & ¬
+		"| grep -Eo " & quoted form of eGrepBitcoinPrice & " | cut -c 14-"
+	set currentLitecoinPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/litecoin/' " & ¬
+		"| grep -Eo " & quoted form of eGrepLitecoinPrice & " | cut -c 14-"
+	set currentDogecoinPrice to do shell script ¬
+		"curl --no-keepalive 'https://coinmarketcap.com/currencies/dogecoin/' " & ¬
+		"| grep -Eo " & quoted form of eGrepDogecoinPrice & " | cut -c 14-"
+end getPrices
+
+on quit --  Executed Only When The Script Quits
+	if button returned of logToTextFile = "Yes" then my logCommands's endLog()
+	continue quit -- Allows The Script To Quit
+end quit
+
+script logCommands
+	property pathToPriceLog : POSIX path of (path to desktop as text) & "Price Log.txt"
+	on beginLog()
+		set startTime to ("Start Time... " & (current date) as text) & ¬
+			" Price Scanning At 5 Minute Intervals"
+		do shell script "echo " & startTime & " >> " & ¬
+			quoted form of pathToPriceLog
+	end beginLog
+	on writeToLog()
+		do shell script "echo " & "Bitcoin:" & quoted form of currentBitcoinPrice & ¬
+			"   Dogecoin:" & quoted form of currentDogecoinPrice & ¬
+			"  Litecoin:" & quoted form of currentLitecoinPrice & ¬
+			"     " & quoted form of (time string of (current date)) & ¬
+			" >> " & quoted form of pathToPriceLog
+	end writeToLog
+	on endLog()
+		set endTime to quoted form of "End Time... " & (current date) as text
+		do shell script "echo " & endTime & " >> " & ¬
+			quoted form of pathToPriceLog
+		do shell script "echo " & " " & " >> " & ¬
+			quoted form of pathToPriceLog
+	end endLog
+end script
